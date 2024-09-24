@@ -14,25 +14,27 @@ export const router = createBrowserRouter([
         element: <Main />,
 
         children: [
-            {
-                path: "/login",
-                element: <Login />
-            },
-            {
-                path: "/register",
-                element: <Register />
-            },
-            {
-                path: "/forgot-password",
-                element: <ForgetPassword />
-            },
-            {
-                path: "/reset-password",
-                element: <ResetPassword />
 
-            }
 
         ]
+
+    },
+
+    {
+        path: "/login",
+        element: <Login />
+    },
+    {
+        path: "/register",
+        element: <Register />
+    },
+    {
+        path: "/forgot-password",
+        element: <ForgetPassword />
+    },
+    {
+        path: "/reset-password",
+        element: <ResetPassword />
 
     }
 
