@@ -7,6 +7,8 @@ import ResetPassword from "../Pages/UserAuthenticationPages/ResetPassword";
 
 import { createBrowserRouter } from "react-router-dom";
 import Home from "../Pages/Shared/Home";
+import InputExpense from "../Pages/InputExpense";
+import Statics from "../Pages/Statics";
 
 
 export const router = createBrowserRouter([
@@ -16,13 +18,18 @@ export const router = createBrowserRouter([
 
         children: [
             {
-                path: "/home",
+                path: "/",
                 element: <Home />
+            },
+            {
+                path: "/expense",
+                element: <InputExpense />
+            },
+            {
+                path: "/statics",
+                element: <Statics />
             }
-
-
         ]
-
     },
 
     {

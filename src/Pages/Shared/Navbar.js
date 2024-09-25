@@ -1,53 +1,59 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import { NavLink, Link } from "react-router-dom";
 
 const Navbar = () => {
+    const menuItems = <Fragment>
+        <NavLink
+            to='/'
+            className={({ isActive }) =>
+                `px-4 py-2 transition-colors duration-300 ${isActive ? 'font-bold text-blue-500 border-b-2 border-blue-500' : 'text-white hover:text-orange-500 '}`
+            }
+        >
+            Home
+        </NavLink>
+        <NavLink
+            to='/expense'
+            className={({ isActive }) =>
+                `px-4 py-2 transition-colors duration-300 ${isActive ? 'font-bold text-blue-500 border-b-2 border-blue-500' : 'text-white hover:text-orange-500 '}`
+            }
+        >
+            Add Expense
+        </NavLink>
+        <NavLink
+            to='/statics'
+            className={({ isActive }) =>
+                `px-4 py-2 transition-colors duration-300 ${isActive ? 'font-bold text-blue-500 border-b-2 border-blue-500' : 'text-white hover:text-orange-500 '}`
+            }
+        >
+            Statics
+        </NavLink>
+    </Fragment>
+
     return (
-        <div className="btm-nav">
-            <button className="bg-pink-200 text-pink-600">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+        <div className="navbar shadow-md">
+            <div className="navbar-start">
+                <div className="dropdown">
+                    <label tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
+                        </svg>
+                    </label>
+                    <ul tabIndex={1} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-24">
+                        {menuItems}
+                    </ul>
+                </div>
+                <Link to='/' className="btn btn-ghost text-xl normal-case">Expense-Tracker</Link>
+            </div>
+            <div className="navbar-center hidden lg:flex">
+                <ul className="menu menu-horizontal p-0 gap-4">
+                    {menuItems}
+                </ul>
+            </div>
+            <label htmlFor="dashboard-drawer" tabIndex={2} className="btn btn-ghost lg:hidden navbar-end">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
                 </svg>
-                <span className="btm-nav-label">Home</span>
-            </button>
-            <button className="active border-blue-600 bg-blue-200 text-blue-600">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span className="btm-nav-label">Warnings</span>
-            </button>
-            <button className="bg-teal-200 text-teal-600">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
-                <span className="btm-nav-label">Statics</span>
-            </button>
+            </label>
         </div>
     );
 };
