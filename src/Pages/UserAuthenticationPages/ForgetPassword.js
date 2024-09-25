@@ -1,15 +1,19 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import Input from "../../Component/Input";
 import { ArrowLeft, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../Authentication/auth";
 
 const ForgetPassword = () => {
-    const [email, setEmail] = useState("");
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const { isLoading, forgotPassword } = useAuth();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleForgotPassword = async (data) => {
+        const { email } = data;
+        await forgotPassword(email);
         setIsSubmitted(true);
     };
 
@@ -27,24 +31,28 @@ const ForgetPassword = () => {
                     </h2>
 
                     {!isSubmitted ? (
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit(handleForgotPassword)}>
                             <p className="text-gray-300 mb-6 text-center">
-                                Enter your email address and we&apos;ll send you a link to reset
-                                your password.
+                                Enter your email address and we'll send you a link to reset your password.
                             </p>
-                            <Input
-                                icon={Mail}
-                                type="email"
-                                placeholder="Email Address"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                            />
+
+                            <div className="form-control mb-4">
+                                <Input
+                                    icon={Mail}
+                                    type="email"
+                                    placeholder="Email Address"
+                                    {...register("email", { required: "Email is required" })}
+                                    required
+                                />
+                                {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+                            </div>
+
                             <motion.button
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                                 className="btn w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold hover:from-green-600 hover:to-emerald-700"
                                 type="submit"
+                                disabled={isLoading}
                             >
                                 Send Reset Link
                             </motion.button>
@@ -52,31 +60,23 @@ const ForgetPassword = () => {
                     ) : (
                         <div className="text-center">
                             <motion.div
-                                initial={{ scale: 0 }}
-                                animate={{ scale: 1 }}
-                                transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                                className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 0.3 }}
+                                className="p-4 text-emerald-400"
                             >
-                                <Mail className="h-8 w-8 text-white" />
+                                Reset email sent successfully!
                             </motion.div>
-                            <p className="text-gray-300 mb-6">
-                                If an account exists for {email}, you will receive a password
-                                reset link shortly.
-                            </p>
+
+                            <Link to="/login" className="mt-4 text-green-500 hover:underline flex items-center justify-center">
+                                <ArrowLeft className="mr-2" /> Back to Login
+                            </Link>
                         </div>
                     )}
-                </div>
-
-                <div className="card-footer flex justify-center">
-                    <Link
-                        to={"/login"}
-                        className="text-sm text-green-400 hover:underline flex items-center"
-                    >
-                        <ArrowLeft className="h-4 w-4 mr-2" /> Back to Login
-                    </Link>
                 </div>
             </motion.div>
         </div>
     );
 };
+
 export default ForgetPassword;

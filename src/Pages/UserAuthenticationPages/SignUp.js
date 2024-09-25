@@ -1,20 +1,24 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../Authentication/auth';
 
-
-const Register = () => {
+const SignUp = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const [signUpError, setSignUPError] = useState('')
+    const [signUpError, setSignUPError] = useState('');
+    const navigate = useNavigate();
+    const { signup, isLoading, error } = useAuth();
 
+    const handleSignUp = async (data) => {
+        const { name, email, password } = data;
 
-
-    const handleSignUp = (data) => {
-        setSignUPError('');
-        console.log(data)
-    }
-
-
+        try {
+            await signup(email, password, name);
+            navigate("/home");
+        } catch (error) {
+            setSignUPError(error.message || "Error signing up");
+        }
+    };
 
     return (
         <div className='h-screen flex justify-center items-center'>
@@ -24,17 +28,19 @@ const Register = () => {
                     <div className="form-control w-full max-w-xs">
                         <label className="label"> <span className="label-text">Name</span></label>
                         <input type="text" {...register("name", {
-                            required: "Name is Required"
+                            required: "Name is required"
                         })} className="input input-bordered w-full max-w-xs" />
                         {errors.name && <p className='text-red-500'>{errors.name.message}</p>}
                     </div>
+
                     <div className="form-control w-full max-w-xs">
                         <label className="label"> <span className="label-text">Email</span></label>
                         <input type="email" {...register("email", {
-                            required: true
+                            required: "Email is required"
                         })} className="input input-bordered w-full max-w-xs" />
                         {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
                     </div>
+
                     <div className="form-control w-full max-w-xs">
                         <label className="label"> <span className="label-text">Password</span></label>
                         <input type="password" {...register("password", {
@@ -44,16 +50,18 @@ const Register = () => {
                         })} className="input input-bordered w-full max-w-xs" />
                         {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
                     </div>
-                    <input className='btn btn-accent w-full mt-4' value="Sign Up" type="submit" />
+
+                    <input className='btn btn-accent w-full mt-4' value="Sign Up" type="submit" disabled={isLoading} />
                     {signUpError && <p className='text-red-600'>{signUpError}</p>}
+                    {error && <p className='text-red-600'>{error}</p>}
                 </form>
-                <p>Already have an account <Link className='text-secondary' to="/login">Please Login</Link></p>
+
+                <p>Already have an account? <Link className='text-secondary' to="/login">Please Login</Link></p>
                 <div className="divider">OR</div>
                 <button className='btn btn-outline w-full'>CONTINUE WITH GOOGLE</button>
-
             </div>
         </div>
     );
 };
 
-export default Register;
+export default SignUp;
