@@ -9,6 +9,7 @@ import InputExpense from "../Pages/InputExpense";
 import Statics from "../Pages/Statics";
 import NotFound from "../Pages/Shared/NotFound";
 import PrivateRoute from "./PrivateRoute";
+import UserProfile from "../Pages/Shared/UserProfile";
 
 export const router = createBrowserRouter([
     {
@@ -21,7 +22,8 @@ export const router = createBrowserRouter([
                 children: [
                     { path: "/", element: <Home /> },
                     { path: "/expense", element: <InputExpense /> },
-                    { path: "/statics", element: <Statics /> }
+                    { path: "/statics", element: <Statics /> },
+                    { path: "/profile", element: <UserProfile /> },
                 ],
             },
         ],
