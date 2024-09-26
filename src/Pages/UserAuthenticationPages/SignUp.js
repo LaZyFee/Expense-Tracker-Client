@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../Authentication/auth';
+import { Helmet } from 'react-helmet';
 
 const SignUp = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -22,6 +23,9 @@ const SignUp = () => {
 
     return (
         <div className='h-screen flex justify-center items-center'>
+            <Helmet>
+                <title>Signup - Expense Tracker</title>
+            </Helmet>
             <div className='w-96 p-7'>
                 <h2 className='text-xl text-center'>Sign Up</h2>
                 <form onSubmit={handleSubmit(handleSignUp)}>
