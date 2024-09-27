@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { toast } from 'react-hot-toast';
 
 const UserProfile = () => {
@@ -12,14 +13,17 @@ const UserProfile = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // Check if current password is provided
         if (!currentPassword) {
             toast.error('Please enter your current password to make changes.');
             return;
         }
 
+        // Determine if either the name or password has been changed
         const hasNameChanged = name !== user.name;
         const hasNewPassword = newPassword.length > 0;
 
+        // If no changes are made, show a message
         if (!hasNameChanged && !hasNewPassword) {
             toast.error('No changes detected.');
             return;
@@ -28,27 +32,40 @@ const UserProfile = () => {
         setIsSubmitting(true);
 
         try {
-            const response = await fetch('http://localhost:5000/update-profile', {
-                method: 'PUT',
-                credentials: 'include', // Send cookies along with the request
+            const formData = new FormData();
+            formData.append('currentPassword', currentPassword); // Add current password
+
+            // Add name to the form data only if it has changed
+            if (hasNameChanged) {
+                formData.append('name', name);
+            }
+
+            // Add new password to the form data only if it's provided
+            if (hasNewPassword) {
+                formData.append('newPassword', newPassword);
+            }
+
+            // Send a request to update the user
+            const response = await axios.put('http://localhost:5000/update-profile', formData, {
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'multipart/form-data',
                 },
-                body: JSON.stringify({
-                    name: hasNameChanged ? name : undefined,
-                    currentPassword,
-                    newPassword: hasNewPassword ? newPassword : undefined,
-                }),
             });
 
-            if (response.ok) {
+            if (response.status === 200) {
+                // Show success toast
                 toast.success('Profile updated successfully!');
 
+                // Update local storage if the name was changed
                 if (hasNameChanged) {
                     localStorage.setItem('user', JSON.stringify({ ...user, name }));
+                    setName(''); // Clear name input
                 }
-            } else {
-                throw new Error('Profile update failed');
+
+                // Clear password fields
+                setCurrentPassword('');
+                setNewPassword('');
             }
         } catch (error) {
             console.error('Error updating profile:', error);
@@ -76,6 +93,7 @@ const UserProfile = () => {
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                                 className="input input-bordered"
+                                placeholder={user.name} // Show old name as placeholder
                                 required
                             />
                         </div>
