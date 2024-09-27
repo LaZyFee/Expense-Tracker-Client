@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { toast } from 'react-hot-toast';
 
 const UserProfile = () => {
@@ -29,23 +28,27 @@ const UserProfile = () => {
         setIsSubmitting(true);
 
         try {
-            const response = await axios.put('http://localhost:5000/update-profile', {
-                name: hasNameChanged ? name : undefined,
-                currentPassword,
-                newPassword: hasNewPassword ? newPassword : undefined,
-            }, {
+            const response = await fetch('http://localhost:5000/update-profile', {
+                method: 'PUT',
+                credentials: 'include', // Send cookies along with the request
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     'Content-Type': 'application/json',
                 },
+                body: JSON.stringify({
+                    name: hasNameChanged ? name : undefined,
+                    currentPassword,
+                    newPassword: hasNewPassword ? newPassword : undefined,
+                }),
             });
 
-            if (response.status === 200) {
+            if (response.ok) {
                 toast.success('Profile updated successfully!');
 
                 if (hasNameChanged) {
                     localStorage.setItem('user', JSON.stringify({ ...user, name }));
                 }
+            } else {
+                throw new Error('Profile update failed');
             }
         } catch (error) {
             console.error('Error updating profile:', error);
@@ -54,7 +57,6 @@ const UserProfile = () => {
             setIsSubmitting(false);
         }
     };
-
 
     return (
         <div className="hero max-h-screen">
