@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
+import PasswordStrengthMeter from '../UserAuthenticationPages/PasswordStrengthMeter';
 
 const UserProfile = () => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -8,6 +9,7 @@ const UserProfile = () => {
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showPasswordStrength, setShowPasswordStrength] = useState(false);
 
     // Function to handle profile updates
     const handleSubmit = async (e) => {
@@ -93,7 +95,7 @@ const UserProfile = () => {
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                                 className="input input-bordered"
-                                placeholder={user.name} // Show old name as placeholder
+                                placeholder={user.name}
                                 required
                             />
                         </div>
@@ -131,9 +133,13 @@ const UserProfile = () => {
                                 type="password"
                                 value={newPassword}
                                 onChange={(e) => setNewPassword(e.target.value)}
+                                onFocus={() => setShowPasswordStrength(true)}
+                                onBlur={() => setShowPasswordStrength(false)}
                                 className="input input-bordered"
                             />
                         </div>
+
+                        {showPasswordStrength && <PasswordStrengthMeter password={newPassword} />}
 
                         <div className="form-control mt-6">
                             <button className="btn btn-primary" type="submit" disabled={isSubmitting}>
