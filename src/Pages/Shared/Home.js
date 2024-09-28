@@ -34,10 +34,7 @@ const Home = () => {
             </h1>
             <h3 className="text-2xl mt-4"> Welcome to Expense Tracker</h3>
             <h3 className="text-xl mt-2 text-primary"> Let's Keep Track of what you are Spending</h3>
-            <div className="flex gap-4 mt-4">
-                <Link to="/expense" className="btn btn-outline btn-secondary">Add expense</Link>
-                <Link to="/statics" className="btn btn-outline btn-secondary">Statics</Link>
-            </div>
+
         </div>
     );
 };

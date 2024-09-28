@@ -5,7 +5,7 @@ import ForgetPassword from "../Pages/UserAuthenticationPages/ForgetPassword";
 import ResetPassword from "../Pages/UserAuthenticationPages/ResetPassword";
 import { createBrowserRouter } from "react-router-dom";
 import Home from "../Pages/Shared/Home";
-import InputExpense from "../Pages/InputExpense";
+import InputEntry from "../Pages/InputEntry";
 import Statics from "../Pages/Statics";
 import NotFound from "../Pages/Shared/NotFound";
 import PrivateRoute from "./PrivateRoute";
@@ -21,7 +21,7 @@ export const router = createBrowserRouter([
                 element: <Main />,
                 children: [
                     { path: "/", element: <Home /> },
-                    { path: "/expense", element: <InputExpense /> },
+                    { path: "/expense", element: <InputEntry /> },
                     { path: "/statics", element: <Statics /> },
                     { path: "/profile", element: <UserProfile /> },
                 ],
