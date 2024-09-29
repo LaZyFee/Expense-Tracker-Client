@@ -20,7 +20,7 @@ const InputEntry = () => {
             setCurrentTime(new Date().toLocaleTimeString());
         }, 1000);
 
-        return () => clearInterval(interval); // Clear interval on component unmount
+        return () => clearInterval(interval);
     }, []);
     // To track total income
     const [totalIncome, setTotalIncome] = useState(0);
@@ -29,9 +29,9 @@ const InputEntry = () => {
         // Fetch existing entries from the backend
         const fetchEntries = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/entries'); // Adjust the endpoint as necessary
+                const response = await axios.get('http://localhost:5000/entries');
                 setEntries(response.data);
-                calculateTotalIncome(response.data); // Calculate initial total income
+                calculateTotalIncome(response.data);
             } catch (error) {
                 console.error("Error fetching entries:", error);
             }
@@ -62,9 +62,9 @@ const InputEntry = () => {
 
         // Retrieve and parse the user object from local storage
         const user = JSON.parse(localStorage.getItem('user'));
-        const userId = user ? user._id : null; // Get the user ID
+        const userId = user ? user._id : null;
 
-        if (formData.amount && formType && userId) { // Ensure required fields are validated
+        if (formData.amount && formType && userId) {
             const entryData = {
                 ...formData,
                 type: formType,
@@ -99,15 +99,15 @@ const InputEntry = () => {
                 date: new Date(entry.date)
             });
             setFormType(entry.type);
-            setEntries(entries.filter((item) => item._id !== id)); // Remove entry from the list
+            setEntries(entries.filter((item) => item._id !== id));
         }
     };
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:5000/entries/${id}`); // Adjust the endpoint as necessary
-            setEntries(entries.filter((item) => item._id !== id)); // Remove entry from the list
-            calculateTotalIncome(entries.filter((item) => item._id !== id)); // Update total income
+            await axios.delete(`http://localhost:5000/entries/${id}`);
+            setEntries(entries.filter((item) => item._id !== id));
+            calculateTotalIncome(entries.filter((item) => item._id !== id));
         } catch (error) {
             console.error("Error deleting entry:", error);
         }
@@ -116,11 +116,11 @@ const InputEntry = () => {
     const getRowColor = (type) => {
         switch (type) {
             case 'savings':
-                return 'bg-blue-700';
+                return 'bg-blue-400';
             case 'income':
-                return 'bg-green-700';
+                return 'bg-green-400';
             case 'expense':
-                return 'bg-red-700';
+                return 'bg-red-400';
             default:
                 return '';
         }
@@ -166,15 +166,19 @@ const InputEntry = () => {
                 <title>Input - Expense Tracker</title>
             </Helmet>
 
-            {/* Current Date and Time */}
-            <div className="text-right lg:mb-8">
-                <h2 className="text-lg font-bold">{formatDate(new Date())}</h2>
-                <h2 className="text-lg font-bold">Time: {currentTime}</h2> {/* Display real-time updated time */}
+            {/* Current Date and Time Card */}
+            <div className="flex justify-end">
+                <div className="card bg-base-100 w-auto shadow-xl lg:mb-8">
+                    <div className="card-body">
+                        <h2 className="text-lg font-bold">{formatDate(new Date())}</h2>
+                        <h2 className="text-lg font-bold">Time {currentTime}</h2>
+                    </div>
+                </div>
             </div>
 
             <div className="flex flex-col lg:flex-row gap-4">
                 {/* Form */}
-                <form onSubmit={handleSubmit} className="mb-6 lg:w-1/3">
+                <form onSubmit={handleSubmit} className="mb-6 bg-base-100 lg:w-1/3 shadow-xl p-2">
                     <div className="flex flex-col space-y-4">
                         <div className="form-control mb-4">
                             <label className="label">
@@ -277,13 +281,13 @@ const InputEntry = () => {
 
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Date</span>
+                                <span className="label-text ">Date</span>
                             </label>
                             <DatePicker
                                 selected={formData.date}
                                 onChange={handleDateChange}
                                 dateFormat="dd/MM/yyyy"
-                                className="input input-bordered"
+                                className="input input-bordered w-full"
                                 required
                             />
                         </div>
@@ -293,14 +297,14 @@ const InputEntry = () => {
                 </form>
 
                 {/* Entries Table */}
-                <div className="overflow-x-auto lg:w-2/3">
+                <div className="w-full p-3 lg:w-2/3 bg-base-100 shadow-2xl">
                     <div className="flex justify-between mb-4">
                         <button onClick={previousMonth} className="btn btn-outline">Previous Month</button>
                         <h2 className="text-xl font-bold">{getMonthYear(currentMonth)}</h2>
                         <button onClick={nextMonth} className="btn btn-outline">Next Month</button>
                     </div>
 
-                    <table className="table table-zebra w-full">
+                    <table className="table table-compact w-full">
                         <thead>
                             <tr>
                                 <th colSpan="3" className="text-center font-extrabold text-xl text-success">
