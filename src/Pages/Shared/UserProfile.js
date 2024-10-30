@@ -48,7 +48,7 @@ const UserProfile = () => {
             }
 
             // Send a request to update the user
-            const response = await axios.put('http://localhost:5000/update-profile', formData, {
+            const response = await axios.put('https://expense-tracker-server-production-e51c.up.railway.app/update-profile', formData, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     'Content-Type': 'multipart/form-data',

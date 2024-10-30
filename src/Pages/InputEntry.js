@@ -29,7 +29,7 @@ const InputEntry = () => {
         // Fetch existing entries from the backend
         const fetchEntries = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/entries');
+                const response = await axios.get('https://expense-tracker-server-production-e51c.up.railway.app/entries');
                 setEntries(response.data);
                 calculateTotalIncome(response.data);
             } catch (error) {
@@ -73,7 +73,7 @@ const InputEntry = () => {
             };
 
             try {
-                const response = await axios.post('http://localhost:5000/add-entry', entryData);
+                const response = await axios.post('https://expense-tracker-server-production-e51c.up.railway.app/add-entry', entryData);
                 setEntries([...entries, response.data]);
                 if (formType === 'income') {
                     calculateTotalIncome([...entries, response.data]); // Update total income
@@ -105,7 +105,7 @@ const InputEntry = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:5000/entries/${id}`);
+            await axios.delete(`https://expense-tracker-server-production-e51c.up.railway.app/entries/${id}`);
             setEntries(entries.filter((item) => item._id !== id));
             calculateTotalIncome(entries.filter((item) => item._id !== id));
         } catch (error) {

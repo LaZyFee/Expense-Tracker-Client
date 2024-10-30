@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 
-const API_URL = "http://localhost:5000";
+const API_URL = "https://expense-tracker-server-production-e51c.up.railway.app";
 
 axios.defaults.withCredentials = true;
 
@@ -18,12 +18,8 @@ export const useAuth = create((set) => ({
         set({ isLoading: true, error: null });
         try {
             const response = await axios.post(`${API_URL}/signup`, { email, password, name });
-
-            // Save token and user to localStorage
-            console.log(response.data);
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('user', JSON.stringify(response.data.user));
-
             set({ user: response.data.user, isAuthenticated: true, isLoading: false });
         } catch (error) {
             set({ error: error.response?.data?.message || "Error signing up", isLoading: false });
@@ -36,22 +32,9 @@ export const useAuth = create((set) => ({
         set({ isLoading: true, error: null });
         try {
             const response = await axios.post(`${API_URL}/login`, { email, password });
-
-            // Log response to inspect its structure
-            console.log('Response:', response.data);
-
-            // Destructure token and user from response
             const { token, user } = response.data;
-
-            // Log the token to confirm it's correct
-            console.log('Token:', token);
-
-            // Store token and user in localStorage
             localStorage.setItem('token', token);
-            console.log('Token saved to localStorage:', localStorage.getItem('token')); // Check if the token is stored
-
             localStorage.setItem('user', JSON.stringify(user));
-
             set({ user, isAuthenticated: true, error: null, isLoading: false });
         } catch (error) {
             console.error('Login error:', error.response?.data?.message || error.message);
@@ -60,19 +43,13 @@ export const useAuth = create((set) => ({
         }
     },
 
-
-
-
     // Logout function
     logout: async () => {
         set({ isLoading: true, error: null });
         try {
             await axios.post(`${API_URL}/logout`);
-
-            // Remove token and user from localStorage
             localStorage.removeItem('token');
             localStorage.removeItem('user');
-
             set({ user: null, isAuthenticated: false, isLoading: false });
         } catch (error) {
             set({ error: "Error logging out", isLoading: false });
@@ -81,17 +58,17 @@ export const useAuth = create((set) => ({
     },
 
     // Check authentication status
-    checkAuth: async () => {
-        set({ isCheckingAuth: true, error: null });
-        try {
-            const response = await axios.get(`${API_URL}/check-auth`);
-            localStorage.setItem('token', response.data.token);
-            localStorage.setItem('user', JSON.stringify(response.data.user));
-            set({ user: response.data.user, isAuthenticated: true, isCheckingAuth: false });
-        } catch (error) {
-            set({ isAuthenticated: false, isCheckingAuth: false });
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
-        }
-    },
+    // checkAuth: async () => {
+    //     set({ isCheckingAuth: true, error: null });
+    //     try {
+    //         const response = await axios.get(`${API_URL}/check-auth`);
+    //         localStorage.setItem('token', response.data.token);
+    //         localStorage.setItem('user', JSON.stringify(response.data.user));
+    //         set({ user: response.data.user, isAuthenticated: true, isCheckingAuth: false });
+    //     } catch (error) {
+    //         set({ isAuthenticated: false, isCheckingAuth: false });
+    //         localStorage.removeItem('token');
+    //         localStorage.removeItem('user');
+    //     }
+    // },
 }));
