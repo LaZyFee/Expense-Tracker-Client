@@ -2,10 +2,6 @@
 
 This project is an expense tracker web application designed to help users track and manage their expenses efficiently. The app is built with the MERN stack (MongoDB, Express, React, Node.js) and leverages multiple libraries for enhanced UI/UX and functionality.
 
-## Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ### Features
 
 - **User Interface**: Styled with Tailwind CSS and DaisyUI for a modern, responsive design.
@@ -17,6 +13,30 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - **Icons**: Rich icon support using `react-icons` and Lucide React.
 - **Routing**: Managed by `react-router-dom` for smooth navigation.
 - **Form Handling**: Seamless form management with `react-hook-form`.
+## Libraries and Technologies
+
+- **Tailwind CSS**: Utility-first CSS framework
+- **DaisyUI**: Components for Tailwind CSS
+- **MongoDB**: Database for storing expenses and user data
+- **Express**: Backend framework for handling API requests
+- **Zustand**: State management library for React
+- **React-Chartjs-2**: For creating data visualizations
+- **React Datepicker**: Date selection component
+- **React Router**: Navigation and routing
+- **React Helmet**: Manage document head data
+- **React Hook Form**: Handle form validation and submission
+- **Lucide React**: Icon library for customizable icons
+- **Framer Motion**: Animations and transitions
+- **React Hot Toast**: Notifications
+- **React Icons**: Icon set for React apps
+  
+## Server side code 
+```https://github.com/LaZyFee/Expense-Tracker-Server```
+
+## Getting Started with Create React App
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
 
 ## Available Scripts
 
@@ -49,22 +69,6 @@ It correctly bundles React in production mode and optimizes the build for the be
 - To learn more about Create React App, see the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 - For more on React, check out the [React documentation](https://reactjs.org/).
 
-## Libraries and Technologies
-
-- **Tailwind CSS**: Utility-first CSS framework
-- **DaisyUI**: Components for Tailwind CSS
-- **MongoDB**: Database for storing expenses and user data
-- **Express**: Backend framework for handling API requests
-- **Zustand**: State management library for React
-- **React-Chartjs-2**: For creating data visualizations
-- **React Datepicker**: Date selection component
-- **React Router**: Navigation and routing
-- **React Helmet**: Manage document head data
-- **React Hook Form**: Handle form validation and submission
-- **Lucide React**: Icon library for customizable icons
-- **Framer Motion**: Animations and transitions
-- **React Hot Toast**: Notifications
-- **React Icons**: Icon set for React apps
 
 ## Deployment
 
