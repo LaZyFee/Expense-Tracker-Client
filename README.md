@@ -1,6 +1,22 @@
-# Getting Started with Create React App
+# Expense Tracker Web App
+
+This project is an expense tracker web application designed to help users track and manage their expenses efficiently. The app is built with the MERN stack (MongoDB, Express, React, Node.js) and leverages multiple libraries for enhanced UI/UX and functionality.
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+### Features
+
+- **User Interface**: Styled with Tailwind CSS and DaisyUI for a modern, responsive design.
+- **Animations**: Powered by Framer Motion for smooth transitions and animations.
+- **Data Management**: State managed by Zustand for an intuitive and scalable store.
+- **Charts**: Expense data visualized with `react-chartjs-2`.
+- **Date Picker**: Easy date selection with `react-datepicker`.
+- **Notifications**: Real-time feedback with `react-hot-toast`.
+- **Icons**: Rich icon support using `react-icons` and Lucide React.
+- **Routing**: Managed by `react-router-dom` for smooth navigation.
+- **Form Handling**: Seamless form management with `react-hook-form`.
 
 ## Available Scripts
 
@@ -8,15 +24,15 @@ In the project directory, you can run:
 
 ### `npm start`
 
-Runs the app in the development mode.\
+Runs the app in development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
+The page will reload if you make edits.\
 You may also see any lint errors in the console.
 
 ### `npm test`
 
-Launches the test runner in the interactive watch mode.\
+Launches the test runner in interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
@@ -24,47 +40,39 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
 ### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+**Note: This is a one-way operation. Once you `eject`, you can't go back!** This command will remove the single build dependency from your project, giving you full control over the configuration files and dependencies.
 
 ## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- To learn more about Create React App, see the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- For more on React, check out the [React documentation](https://reactjs.org/).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Libraries and Technologies
 
-### Code Splitting
+- **Tailwind CSS**: Utility-first CSS framework
+- **DaisyUI**: Components for Tailwind CSS
+- **MongoDB**: Database for storing expenses and user data
+- **Express**: Backend framework for handling API requests
+- **Zustand**: State management library for React
+- **React-Chartjs-2**: For creating data visualizations
+- **React Datepicker**: Date selection component
+- **React Router**: Navigation and routing
+- **React Helmet**: Manage document head data
+- **React Hook Form**: Handle form validation and submission
+- **Lucide React**: Icon library for customizable icons
+- **Framer Motion**: Animations and transitions
+- **React Hot Toast**: Notifications
+- **React Icons**: Icon set for React apps
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Deployment
 
-### Analyzing the Bundle Size
+For more details on deploying your application, refer to the [Create React App deployment documentation](https://facebook.github.io/create-react-app/docs/deployment).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Additional Information
 
-### Making a Progressive Web App
+For more advanced topics like [code splitting](https://facebook.github.io/create-react-app/docs/code-splitting), [bundle size analysis](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size), and [PWA setup](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app), see the Create React App documentation.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+Happy coding!

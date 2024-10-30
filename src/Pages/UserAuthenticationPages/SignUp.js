@@ -9,7 +9,6 @@ const SignUp = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [signUpError, setSignUPError] = useState('');
     const [password, setPassword] = useState('');
-    const [isPasswordFocused, setIsPasswordFocused] = useState(false); // State to track password input focus
     const navigate = useNavigate();
     const { signup, isLoading, error } = useAuth();
 
@@ -65,15 +64,14 @@ const SignUp = () => {
                                 }
                             })}
                             className="input input-bordered w-full max-w-xs"
+                            value={password}
                             onChange={(e) => setPassword(e.target.value)} // Capture the password input
-                            onFocus={() => setIsPasswordFocused(true)} // Set focus state to true
-                            onBlur={() => setIsPasswordFocused(false)} // Set focus state to false
                         />
                         {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
                     </div>
 
-                    {/* Render the PasswordStrengthMeter only when the password input is focused */}
-                    {isPasswordFocused && <PasswordStrengthMeter password={password} />}
+                    {/* Render PasswordStrengthMeter only if password exists */}
+                    {password && <PasswordStrengthMeter password={password} />}
 
                     <input className='btn btn-accent w-full mt-4' value="Sign Up" type="submit" disabled={isLoading} />
                     {signUpError && <p className='text-red-600'>{signUpError}</p>}

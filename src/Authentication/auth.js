@@ -7,7 +7,7 @@ axios.defaults.withCredentials = true;
 
 export const useAuth = create((set) => ({
     user: JSON.parse(localStorage.getItem('user')) || null,
-    isAuthenticated: !!localStorage.getItem('user'),
+    isAuthenticated: !!localStorage.getItem('token'), // Check token in localStorage for authentication
     error: null,
     isLoading: false,
     isCheckingAuth: true,
@@ -18,7 +18,12 @@ export const useAuth = create((set) => ({
         set({ isLoading: true, error: null });
         try {
             const response = await axios.post(`${API_URL}/signup`, { email, password, name });
+
+            // Save token and user to localStorage
+            console.log(response.data);
+            localStorage.setItem('token', response.data.token);
             localStorage.setItem('user', JSON.stringify(response.data.user));
+
             set({ user: response.data.user, isAuthenticated: true, isLoading: false });
         } catch (error) {
             set({ error: error.response?.data?.message || "Error signing up", isLoading: false });
@@ -31,20 +36,43 @@ export const useAuth = create((set) => ({
         set({ isLoading: true, error: null });
         try {
             const response = await axios.post(`${API_URL}/login`, { email, password });
-            localStorage.setItem('user', JSON.stringify(response.data.user));
-            set({ user: response.data.user, isAuthenticated: true, error: null, isLoading: false });
+
+            // Log response to inspect its structure
+            console.log('Response:', response.data);
+
+            // Destructure token and user from response
+            const { token, user } = response.data;
+
+            // Log the token to confirm it's correct
+            console.log('Token:', token);
+
+            // Store token and user in localStorage
+            localStorage.setItem('token', token);
+            console.log('Token saved to localStorage:', localStorage.getItem('token')); // Check if the token is stored
+
+            localStorage.setItem('user', JSON.stringify(user));
+
+            set({ user, isAuthenticated: true, error: null, isLoading: false });
         } catch (error) {
+            console.error('Login error:', error.response?.data?.message || error.message);
             set({ error: error.response?.data?.message || "Error logging in", isLoading: false });
             throw error;
         }
     },
+
+
+
 
     // Logout function
     logout: async () => {
         set({ isLoading: true, error: null });
         try {
             await axios.post(`${API_URL}/logout`);
+
+            // Remove token and user from localStorage
+            localStorage.removeItem('token');
             localStorage.removeItem('user');
+
             set({ user: null, isAuthenticated: false, isLoading: false });
         } catch (error) {
             set({ error: "Error logging out", isLoading: false });
@@ -57,48 +85,13 @@ export const useAuth = create((set) => ({
         set({ isCheckingAuth: true, error: null });
         try {
             const response = await axios.get(`${API_URL}/check-auth`);
+            localStorage.setItem('token', response.data.token);
             localStorage.setItem('user', JSON.stringify(response.data.user));
             set({ user: response.data.user, isAuthenticated: true, isCheckingAuth: false });
         } catch (error) {
             set({ isAuthenticated: false, isCheckingAuth: false });
+            localStorage.removeItem('token');
             localStorage.removeItem('user');
         }
     },
-
-    forgotPassword: async (email) => {
-        set({ isLoading: true, error: null });
-        try {
-            const response = await axios.post(`${API_URL}/forgot-password`, { email });
-            set({ message: response.data.message, isLoading: false });
-        } catch (error) {
-            set({
-                isLoading: false,
-                error: error.response.data.message || "Error sending reset password email",
-            });
-            throw error;
-        }
-    },
-
-    resetPassword: async (token, password) => {
-        set({ isLoading: true, error: null });
-        try {
-            const response = await axios.post(`${API_URL}/reset-password/${token}`, { password });
-            set({ message: response.data.message, isLoading: false });
-        } catch (error) {
-            set({
-                isLoading: false,
-                error: error.response.data.message || "Error resetting password",
-            });
-            throw error;
-        }
-    },
 }));
-
-// Sync across tabs
-window.addEventListener('storage', (event) => {
-    if (event.key === 'user') {
-        const user = JSON.parse(event.newValue);
-        const isAuthenticated = !!user;
-        useAuth.getState().set({ user, isAuthenticated });
-    }
-});
