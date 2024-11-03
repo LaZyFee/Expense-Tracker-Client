@@ -7,6 +7,15 @@ import { toast } from 'react-hot-toast';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const InputEntry = () => {
+    const testapi = "https://expense-tracker-server-production-6e9d.up.railway.app";
+    // const api = "http://localhost:5000"
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        // Retrieve user data only once when the component mounts
+        const storedUser = JSON.parse(localStorage.getItem('user'));
+        setUser(storedUser);
+    }, []);
     const [formType, setFormType] = useState('');
     const [formData, setFormData] = useState({ amount: '', category: '', note: '', date: new Date() });
     const [entries, setEntries] = useState([]);
@@ -26,18 +35,20 @@ const InputEntry = () => {
     const [totalIncome, setTotalIncome] = useState(0);
 
     useEffect(() => {
-        // Fetch existing entries from the backend
         const fetchEntries = async () => {
             try {
-                const response = await axios.get('https://expense-tracker-server-production-e51c.up.railway.app/entries');
-                setEntries(response.data);
-                calculateTotalIncome(response.data);
+                if (user?._id) {
+                    const response = await axios.get(`${testapi}/entries/${user._id}`);
+                    setEntries(response.data);
+                    calculateTotalIncome(response.data);
+                }
             } catch (error) {
                 console.error("Error fetching entries:", error);
             }
         };
         fetchEntries();
-    }, []);
+    }, [user?._id]);
+
 
     const calculateTotalIncome = (data) => {
         const incomeEntries = data.filter(entry => entry.type === 'income');
@@ -73,7 +84,7 @@ const InputEntry = () => {
             };
 
             try {
-                const response = await axios.post('https://expense-tracker-server-production-e51c.up.railway.app/add-entry', entryData);
+                const response = await axios.post(`${testapi}/add-entry`, entryData);
                 setEntries([...entries, response.data]);
                 if (formType === 'income') {
                     calculateTotalIncome([...entries, response.data]); // Update total income
@@ -105,7 +116,7 @@ const InputEntry = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`https://expense-tracker-server-production-e51c.up.railway.app/entries/${id}`);
+            await axios.delete(`${testapi}/entries/${id}`);
             setEntries(entries.filter((item) => item._id !== id));
             calculateTotalIncome(entries.filter((item) => item._id !== id));
         } catch (error) {
