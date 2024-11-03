@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 
-const API_URL = "https://expense-tracker-server-production-e51c.up.railway.app";
+const API_URL = "https://expense-tracker-server-production-6e9d.up.railway.app";
 
 axios.defaults.withCredentials = true;
 
