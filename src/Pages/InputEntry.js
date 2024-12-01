@@ -7,7 +7,7 @@ import { toast } from 'react-hot-toast';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const InputEntry = () => {
-    const testapi = "https://expense-tracker-server-production-6e9d.up.railway.app";
+    const testapi = "https://expense-tracker-server-puce.vercel.app";
     // const api = "http://localhost:5000"
     const [user, setUser] = useState(null);
 
